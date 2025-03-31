@@ -16,4 +16,4 @@ export default function Footer() {
     </FooterContainer>
   );
 }
-// Footer component to be used in the main layout
+// Footer component to be used in the main layout style
