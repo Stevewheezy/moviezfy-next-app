@@ -45,18 +45,45 @@ const MovieTitle = styled.h2`
 `;
 
 const SearchInput = styled.input`
-  width: 100%;
-  padding: 10px;
+  width: 60%;  /* Moderate width */
+  max-width: 500px; /* Prevents it from becoming too wide */
+  padding: 12px;
   font-size: 16px;
-  margin-bottom: 20px;
+  border: 1px solid #444;
+  border-radius: 25px;
+  outline: none;
+  background-color: #333;
+  color: white;
+  display: block;
+  margin: 10px auto;  /* Centered */
+  transition: all 0.3s ease-in-out;
+
+  &:focus {
+    border-color: #ff9800;
+    box-shadow: 0 0 10px rgba(255, 152, 0, 0.8);
+  }
 `;
 
 const GenreSelect = styled.select`
-  width: 100%;
-  padding: 10px;
+  width: 60%;
+  max-width: 500px;
+  padding: 12px;
   font-size: 16px;
-  margin-bottom: 20px;
+  border: 1px solid #444;
+  border-radius: 25px;
+  outline: none;
+  background-color: #333;
+  color: white;
+  display: block;
+  margin: 10px auto;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    border-color: #ff9800;
+  }
 `;
+
 
 const StyledLabel = styled.label`
   color: white;

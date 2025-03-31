@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <FooterContainer>
       <p>&copy; {new Date().getFullYear()} Moviezfy. All rights reserved.</p>
-      <p>Contact Developer: <a href="mailto:stephenoyelabi@gmail.com">developer@example.com</a></p>
+      <p>Contact Developer: <a href="mailto:stephenoyelabi@gmail.com">Stephen Oyelabi</a></p>
     </FooterContainer>
   );
 }
