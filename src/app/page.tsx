@@ -1,95 +1,165 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
+import { useEffect, useState } from "react";
+import { fetchMovies, fetchGenres, searchMovies } from "./services/tmdb";
+import styled from "styled-components";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
+// Styled Components
+const Container = styled.div`
+  max-width: 1200px;
+  margin: auto;
+  padding-top: 80px;
+`;
+
+const Title = styled.h1`
+  font-size: 2rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const MovieGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+`;
+
+const MovieCard = styled.div`
+  background: #222;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+`;
+
+const MovieImage = styled.img`
+  width: 100%;
+  border-radius: 8px;
+`;
+
+const MovieTitle = styled.h2`
+  font-size: 18px;
+  margin-top: 10px;
+  color: white;
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+`;
+
+const GenreSelect = styled.select`
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+`;
+
+const StyledLabel = styled.label`
+  color: white;
+  display: block;
+  margin-bottom: 10px;
+`;
+
+// Component Function
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [movies, setMovies] = useState<any[]>([]);
+  const [genres, setGenres] = useState<any[]>([]);
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+  useEffect(() => {
+    const loadGenres = async () => {
+      const genreList = await fetchGenres();
+      setGenres(genreList);
+    };
+
+    const loadMovies = async () => {
+      const movieList = await fetchMovies();
+      setMovies(movieList);
+    };
+
+    loadGenres();
+    loadMovies();
+  }, []);
+
+  // Handle Genre Change
+  const handleGenreChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const genreId = e.target.value;
+    setSelectedGenre(genreId);
+    if (genreId) {
+      const movieList = await fetchMovies(genreId);
+      setMovies(movieList);
+    } else {
+      const movieList = await fetchMovies();
+      setMovies(movieList);
+    }
+  };
+
+  // Handle Search Input
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchTerm(query);
+    if (query.length > 2) {
+      const results = await searchMovies(query);
+      setMovies(results);
+    } else {
+      const movieList = await fetchMovies();
+      setMovies(movieList);
+    }
+  };
+
+  return (
+    <>
+      <Navbar />
+      <Container>
+        <Title>Popular Movies</Title>
+
+        {/* Search Input */}
+        <StyledLabel htmlFor="search-input">Search for a movie:</StyledLabel>
+        <SearchInput
+          id="search-input"
+          type="text"
+          placeholder="Search for a movie..."
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+
+        {/* Genre Dropdown */}
+        <StyledLabel htmlFor="genre-select">Select Genre:</StyledLabel>
+        <GenreSelect
+          id="genre-select"
+          name="genre-select"
+          title="Select a genre"
+          value={selectedGenre}
+          onChange={handleGenreChange}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <option value="">All Genres</option>
+          {genres.map((genre) => (
+            <option key={genre.id} value={genre.id}>
+              {genre.name}
+            </option>
+          ))}
+        </GenreSelect>
+
+        {/* Movie Grid */}
+        <MovieGrid>
+          {movies.map((movie) => (
+            <MovieCard key={movie.id}>
+              <MovieImage
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+              />
+              <MovieTitle>{movie.title}</MovieTitle>
+            </MovieCard>
+          ))}
+        </MovieGrid>
+      </Container>
+      <Footer />
+    </>
   );
 }
+// The above code is a simple movie search application using React and styled-components.
