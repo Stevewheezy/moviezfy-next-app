@@ -66,8 +66,19 @@ const StyledLabel = styled.label`
 
 // Component Function
 export default function Home() {
-  const [movies, setMovies] = useState<any[]>([]);
-  const [genres, setGenres] = useState<any[]>([]);
+  interface Movie {
+    id: number;
+    title: string;
+    poster_path: string;
+  }
+
+  const [movies, setMovies] = useState<Movie[]>([]);
+  interface Genre {
+    id: number;
+    name: string;
+  }
+
+  const [genres, setGenres] = useState<Genre[]>([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -133,7 +144,7 @@ export default function Home() {
         <GenreSelect
           id="genre-select"
           name="genre-select"
-          title="Select a genre"
+          aria-label="Select a genre"
           value={selectedGenre}
           onChange={handleGenreChange}
         >

@@ -29,7 +29,14 @@ const MovieDescription = styled.p`
 
 export default function MovieDetail() {
   const { id } = useParams();
-  const [movie, setMovie] = useState<any>(null);
+  interface Movie {
+    id: number;
+    title: string;
+    overview: string;
+    poster_path: string;
+  }
+
+  const [movie, setMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
     async function getMovie() {
@@ -42,7 +49,7 @@ export default function MovieDetail() {
     }
 
                 const selectedMovie: Movie | undefined = (data as Movie[]).find((m: Movie) => m.id.toString() === id);
-      setMovie(selectedMovie);
+      setMovie(selectedMovie || null);
     }
     if (id) getMovie();
   }, [id]);
