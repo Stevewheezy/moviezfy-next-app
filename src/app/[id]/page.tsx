@@ -46,14 +46,14 @@ const MovieDetails = styled.div`
 
 const MovieTitle = styled.h1`
   font-size: 2.5rem;
-  color: #ff9800;
+  color:rgb(56, 36, 238);
   margin-bottom: 20px;
   text-align: center;
 `;
 
 const MovieDescription = styled.p`
   font-size: 1.2rem;
-  color: #ddd;
+  color: rgb(3, 1, 15);
   line-height: 1.8;
   margin-bottom: 20px;
   text-align: justify;
@@ -62,7 +62,7 @@ const MovieDescription = styled.p`
 const MovieInfo = styled.div`
   margin-top: 20px;
   font-size: 1rem;
-  color: #aaa;
+  color: rgb(3, 1, 15); /* Updated color */
   text-align: left;
 
   p {
@@ -70,7 +70,7 @@ const MovieInfo = styled.div`
   }
 
   strong {
-    color: #fff;
+    color: rgb(56, 36, 238); /* Updated color */
   }
 `;
 
