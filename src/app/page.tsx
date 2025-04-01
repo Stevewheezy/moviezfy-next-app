@@ -5,6 +5,7 @@ import { fetchMovies, fetchGenres, searchMovies } from "./services/tmdb";
 import styled from "styled-components";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Link from "next/link"; // Import Link from next/link
 
 // Styled Components
 const Container = styled.div`
@@ -31,6 +32,12 @@ const MovieCard = styled.div`
   padding: 10px;
   border-radius: 8px;
   text-align: center;
+  cursor: pointer; /* Add pointer cursor for better UX */
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+  }
 `;
 
 const MovieImage = styled.img`
@@ -45,7 +52,7 @@ const MovieTitle = styled.h2`
 `;
 
 const SearchInput = styled.input`
-  width: 60%;  /* Moderate width */
+  width: 60%; /* Moderate width */
   max-width: 500px; /* Prevents it from becoming too wide */
   padding: 12px;
   font-size: 16px;
@@ -55,7 +62,7 @@ const SearchInput = styled.input`
   background-color: #333;
   color: white;
   display: block;
-  margin: 10px auto;  /* Centered */
+  margin: 10px auto; /* Centered */
   transition: all 0.3s ease-in-out;
 
   &:focus {
@@ -83,7 +90,6 @@ const GenreSelect = styled.select`
     border-color: #ff9800;
   }
 `;
-
 
 const StyledLabel = styled.label`
   color: white;
@@ -186,13 +192,15 @@ export default function Home() {
         {/* Movie Grid */}
         <MovieGrid>
           {movies.map((movie) => (
-            <MovieCard key={movie.id}>
-              <MovieImage
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-              />
-              <MovieTitle>{movie.title}</MovieTitle>
-            </MovieCard>
+            <Link key={movie.id} href={`/${movie.id}`} passHref>
+              <MovieCard>
+                <MovieImage
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={movie.title}
+                />
+                <MovieTitle>{movie.title}</MovieTitle>
+              </MovieCard>
+            </Link>
           ))}
         </MovieGrid>
       </Container>
@@ -200,4 +208,3 @@ export default function Home() {
     </>
   );
 }
-// The above code is a simple movie search application using React and styled-components.
