@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { fetchMovies } from "../services/tmdb";
 import styled from "styled-components";
-import Navbar from "../components/Navbar"; // Import Navbar for consistency
+import Navbar from "../components/Navbar";
 
 const Container = styled.div`
   max-width: 1200px;
   margin: auto;
   padding: 20px;
+  padding-top: 80px; /* Adjust for fixed navbar */
   text-align: center;
 `;
 
