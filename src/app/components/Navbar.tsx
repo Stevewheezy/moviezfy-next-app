@@ -1,6 +1,7 @@
 "use client";
 
 import styled from "styled-components";
+import Link from "next/link"; // Import Link for navigation
 
 const Nav = styled.nav`
   position: fixed;
@@ -17,6 +18,11 @@ const Nav = styled.nav`
 const Logo = styled.h1`
   color: #fff;
   font-size: 1.5rem;
+  cursor: pointer;
+
+  &:hover {
+    color: #f39c12;
+  }
 `;
 
 const NavLinks = styled.ul`
@@ -32,6 +38,7 @@ const NavLinks = styled.ul`
 const NavLink = styled.li`
   color: #fff;
   cursor: pointer;
+
   &:hover {
     color: #f39c12;
   }
@@ -40,11 +47,19 @@ const NavLink = styled.li`
 export default function Navbar() {
   return (
     <Nav>
-      <Logo>Moviezfy</Logo>
+      <Link href="/" passHref>
+        <Logo>Moviezfy</Logo>
+      </Link>
       <NavLinks>
-        <NavLink>Home</NavLink>
-        <NavLink>Genres</NavLink>
-        <NavLink>Search</NavLink>
+        <Link href="/" passHref>
+          <NavLink as="a">Home</NavLink>
+        </Link>
+        <Link href="/#genres" passHref>
+          <NavLink as="a">Genres</NavLink>
+        </Link>
+        <Link href="/#search" passHref>
+          <NavLink as="a">Search</NavLink>
+        </Link>
       </NavLinks>
     </Nav>
   );

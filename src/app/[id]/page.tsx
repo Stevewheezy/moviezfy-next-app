@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { fetchMovies } from "../services/tmdb";
 import styled from "styled-components";
-import Navbar from "../components/Navbar"; // Import Navbar for consistency
+import Navbar from "../components/Navbar";
 
 const Container = styled.div`
   max-width: 1200px;
   margin: auto;
   padding: 20px;
+  padding-top: 80px; /* Adjust for fixed navbar */
   text-align: center;
 `;
 
@@ -44,21 +45,33 @@ const MovieDetails = styled.div`
 `;
 
 const MovieTitle = styled.h1`
-  font-size: 2rem;
-  color: white;
-  margin-bottom: 10px;
+  font-size: 2.5rem;
+  color: #ff9800;
+  margin-bottom: 20px;
+  text-align: center;
 `;
 
 const MovieDescription = styled.p`
-  font-size: 1rem;
-  color: #ccc;
-  line-height: 1.6;
+  font-size: 1.2rem;
+  color: #ddd;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  text-align: justify;
 `;
 
 const MovieInfo = styled.div`
-  margin-top: 10px;
-  font-size: 0.9rem;
+  margin-top: 20px;
+  font-size: 1rem;
   color: #aaa;
+  text-align: left;
+
+  p {
+    margin: 5px 0;
+  }
+
+  strong {
+    color: #fff;
+  }
 `;
 
 export default function MovieDetail() {
